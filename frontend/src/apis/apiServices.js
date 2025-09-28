@@ -43,6 +43,7 @@ export const loginApi = async (userData) => {
 
 export const CreateAccountApi = async (userData) => {
   try {
+    console.log("sending this data ",userData)
     const response = await api.post("/auth/create-account", userData);
     return response.data;
   } catch (error) {

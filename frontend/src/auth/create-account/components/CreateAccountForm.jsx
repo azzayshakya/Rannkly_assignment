@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { useDefineCreateAccountForm } from "../hooks/useDefineLoginForm";
 import { useCreateAccountMutation } from "../hooks/useCreateAccountMutation";
+import { data } from "autoprefixer";
 
 const CreateAccountForm = () => {
   // const navigate = useNavigate();
   const { form, errors } = useDefineCreateAccountForm();
   const { submitLoginMutation, isSubmitting } = useCreateAccountMutation();
-
+  console.log("form data before send", data);
   const onSubmit = (data) => {
     submitLoginMutation(data);
   };
@@ -20,7 +21,18 @@ const CreateAccountForm = () => {
 
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            
+            <label className="mb-1 block text-sm text-gray-400">Name</label>
+            <input
+              type="text"
+              {...form.register("name")}
+              className="w-full rounded-lg border border-gray-600 bg-gray-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              placeholder="Enter your name"
+            />
+            {errors.name && (
+              <p className="mt-1 text-sm text-red-500">{errors.name.message}</p>
+            )}
+          </div>
+          <div>
             <label className="mb-1 block text-sm text-gray-400">Email</label>
             <input
               type="email"
@@ -34,26 +46,11 @@ const CreateAccountForm = () => {
               </p>
             )}
           </div>
+
           <div>
-            
-            <label className="mb-1 block text-sm text-gray-400">Name</label>
-            <input
-              type="text"
-              {...form.register("name")}
-              className="w-full rounded-lg border border-gray-600 bg-gray-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              placeholder="Enter your name"
-            />
-            {errors.name && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.name.message}
-              </p>
-            )}
-          </div>
-          <div>
-            
             <label className="mb-1 block text-sm text-gray-400">Number</label>
             <input
-              type="number"
+              type="text"
               {...form.register("number")}
               className="w-full rounded-lg border border-gray-600 bg-gray-700 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Enter your number"
@@ -64,8 +61,6 @@ const CreateAccountForm = () => {
               </p>
             )}
           </div>
-
-          
 
           <div>
             <label className="mb-1 block text-sm text-gray-400">Password</label>

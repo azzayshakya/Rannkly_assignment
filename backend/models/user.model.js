@@ -25,7 +25,6 @@ const userSchema = new mongoose.Schema(
     number: {
       type: String,
       required: [true, "Phone number is required"],
-      unique: true,
       match: [/^[0-9]{10}$/, "Phone number must be exactly 10 digits"],
     },
 
@@ -33,7 +32,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Password is required"],
       minlength: [5, "Password must be at least 5 characters"],
-      select: false, 
+      select: false,
     },
 
     role: {
@@ -42,7 +41,7 @@ const userSchema = new mongoose.Schema(
       default: "Employee",
     },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 const User = mongoose.model("User", userSchema);

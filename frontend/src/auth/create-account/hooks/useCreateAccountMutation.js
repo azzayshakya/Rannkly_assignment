@@ -18,11 +18,12 @@ export const useCreateAccountMutation = () => {
   } = useMutation({
     mutationFn: CreateAccountApi,
     onSuccess: (data) => {
+      
       const { token, user } = data;
-      toast.success(`Account Created 🎉`);
-      localStorage.setItem("wechatUserToken", token);
+      toast.success(`Account Created`);
+      localStorage.setItem("raUserToken", token);
 
-      localStorage.setItem("wechatUser", JSON.stringify(user));
+      localStorage.setItem("raUser", JSON.stringify(user));
       setUser(data.user)
       navigate("/home");
     },
