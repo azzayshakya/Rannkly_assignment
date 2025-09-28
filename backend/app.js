@@ -4,7 +4,7 @@ import connectDB from "./db/db.js";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-
+import authRoutes from "./routes/authRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -27,5 +27,6 @@ app.get("/", (req, res) => {
   res.send("backend is running");
 });
 
+app.use("/auth", authRoutes);
 
 export default app;
