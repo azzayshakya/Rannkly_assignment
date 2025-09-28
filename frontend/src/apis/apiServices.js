@@ -59,3 +59,12 @@ export const logoutApi = async () => {
     throw error.response?.data || error.message;
   }
 };
+
+export const GetProfileApi=async()=>{
+  try {
+    const response = await api.get("/auth/profile", authHeaders());
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+}

@@ -26,17 +26,19 @@ export default function HomeTopBar() {
 
         <div className="hidden items-center space-x-6 md:flex">
           <Link
-            href="/home"
+            to="/home"
             className="text-white transition-colors hover:text-primary"
           >
             Home
           </Link>
+          
           <Link
-            href="/about-us"
+            to="/profile"
             className="text-white transition-colors hover:text-primary"
           >
-            About
+            Profile
           </Link>
+         
         </div>
 
         <div className="hidden items-center space-x-3 md:flex">
@@ -96,16 +98,16 @@ export default function HomeTopBar() {
         }`}
       >
         <Link
-          href="/home"
+          to="/home"
           className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
         >
           Home
         </Link>
         <Link
-          href="/about-us"
+          to="/profile"
           className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
         >
-          About
+          Profile
         </Link>
 
         <hr className="border-gray-600" />

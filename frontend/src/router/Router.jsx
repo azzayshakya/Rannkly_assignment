@@ -7,7 +7,7 @@ import HomeUILayout from "../layout/Home/HomeLayout";
 import NotAuthorized from "@/pages/common/NotAuthorized";
 import LoginMain from "@/auth/login/LoginMain";
 import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
-
+import MyProfile from "@/pages/common/MyProfile";
 
 const router = createBrowserRouter(
   [
@@ -23,6 +23,10 @@ const router = createBrowserRouter(
         {
           path: "/home",
           element: <Home />,
+        },
+        {
+          path: "/profile",
+          element: <MyProfile />,
         },
         {
           path: "/login",
