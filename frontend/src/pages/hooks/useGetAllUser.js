@@ -13,7 +13,7 @@ export const useGetAllUserMutation = () => {
     data,
   } = useMutation({
     mutationFn: GetAllUsersApi,
-    onSuccess: (data) => {
+    onSuccess: () => {
     },
     onError: (error) => {
       toast.error(error.message);

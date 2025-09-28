@@ -43,7 +43,6 @@ export const loginApi = async (userData) => {
 
 export const CreateAccountApi = async (userData) => {
   try {
-    console.log("sending this data ",userData)
     const response = await api.post("/auth/create-account", userData);
     return response.data;
   } catch (error) {
@@ -60,20 +59,34 @@ export const logoutApi = async () => {
   }
 };
 
-export const GetProfileApi=async()=>{
+export const GetProfileApi = async () => {
   try {
     const response = await api.get("/auth/profile", authHeaders());
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
   }
-}
+};
 
-export const GetAllUsersApi=async()=>{
+export const GetAllUsersApi = async () => {
   try {
     const response = await api.get("/auth/get-users", authHeaders());
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
   }
-}
+};
+
+export const UpdateUserRoleApi = async ({ userId, role }) => {
+  try {
+    const response = await api.patch(
+      `/admin/users/${userId}/role`,
+      { role },
+      authHeaders(),
+    );
+
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
