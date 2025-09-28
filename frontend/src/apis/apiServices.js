@@ -15,12 +15,12 @@ api.interceptors.response.use(
 
     if (status === 401) {
       toast.error("Session expired, please login again");
-      localStorage.removeItem("raUserToken");
-      localStorage.removeItem("raUser");
-      window.location.href = "/login";
+      // localStorage.removeItem("raUserToken");
+      // localStorage.removeItem("raUser");
+      // window.location.href = "/login";
     } else if (status === 403) {
       toast.error("You are not authorized to perform this action");
-      window.location.href = "/not-authorized";
+      // window.location.href = "/not-authorized";
     }
     return Promise.reject(error);
   },
@@ -85,6 +85,15 @@ export const UpdateUserRoleApi = async ({ userId, role }) => {
       authHeaders(),
     );
 
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+export const CreateTaskApi = async (data) => {
+  try {
+    const response = await api.post("/api/create-task", data, authHeaders());
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;

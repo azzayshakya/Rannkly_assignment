@@ -9,6 +9,7 @@ import LoginMain from "@/auth/login/LoginMain";
 import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
 import MyProfile from "@/pages/common/MyProfile";
 import UserRolesManagement from "@/pages/Admin/UserRolesManagment";
+import CreateTaskMainForm from "@/pages/TaskForm/TaskMainForm";
 
 const router = createBrowserRouter(
   [
@@ -32,6 +33,10 @@ const router = createBrowserRouter(
         {
           path: "/user-roles-management",
           element: <UserRolesManagement />,
+        },
+        {
+          path: "/create-task",
+          element: <CreateTaskMainForm />,
         },
         {
           path: "/login",
