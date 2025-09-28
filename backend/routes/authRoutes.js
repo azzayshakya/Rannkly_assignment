@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  getAllUsers,
   getProfile,
   loginUser,
   registerUser,
@@ -12,5 +13,7 @@ const router = Router();
 router.post("/create-account", validateRegistration, registerUser);
 router.post("/login", validateLogin, loginUser);
 router.get("/profile", authMiddleware, getProfile);
+router.get("/get-users", authMiddleware, getAllUsers);
+
 
 export default router;

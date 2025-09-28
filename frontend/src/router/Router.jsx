@@ -8,6 +8,7 @@ import NotAuthorized from "@/pages/common/NotAuthorized";
 import LoginMain from "@/auth/login/LoginMain";
 import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
 import MyProfile from "@/pages/common/MyProfile";
+import UserRolesManagement from "@/pages/Admin/UserRolesManagment";
 
 const router = createBrowserRouter(
   [
@@ -27,6 +28,10 @@ const router = createBrowserRouter(
         {
           path: "/profile",
           element: <MyProfile />,
+        },
+        {
+          path: "/user-roles-management",
+          element: <UserRolesManagement />,
         },
         {
           path: "/login",

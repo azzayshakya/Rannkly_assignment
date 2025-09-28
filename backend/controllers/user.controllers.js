@@ -122,3 +122,25 @@ export const logoutUser = async (req, res) => {
       .json({ status: false, message: "Internal Server Error" });
   }
 };
+
+export const getAllUsers = async (req, res) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const currentUserId = decoded.id;
+
+    const users = await User.find({ _id: { $ne: currentUserId } });
+    
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};

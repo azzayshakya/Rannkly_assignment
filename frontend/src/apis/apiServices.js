@@ -68,3 +68,12 @@ export const GetProfileApi=async()=>{
     throw error.response?.data || error.message;
   }
 }
+
+export const GetAllUsersApi=async()=>{
+  try {
+    const response = await api.get("/auth/get-users", authHeaders());
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+}
