@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { UserContext } from "@/context/user.context";
 
@@ -25,18 +25,18 @@ export default function HomeTopBar() {
         </div>
 
         <div className="hidden items-center space-x-6 md:flex">
-          <a
+          <Link
             href="/home"
             className="text-white transition-colors hover:text-primary"
           >
             Home
-          </a>
-          <a
+          </Link>
+          <Link
             href="/about-us"
             className="text-white transition-colors hover:text-primary"
           >
             About
-          </a>
+          </Link>
         </div>
 
         <div className="hidden items-center space-x-3 md:flex">
@@ -95,18 +95,18 @@ export default function HomeTopBar() {
             : "hidden scale-95 opacity-0"
         }`}
       >
-        <a
+        <Link
           href="/home"
           className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
         >
           Home
-        </a>
-        <a
+        </Link>
+        <Link
           href="/about-us"
           className="flex justify-center rounded-lg border p-2 text-white hover:text-primary"
         >
           About
-        </a>
+        </Link>
 
         <hr className="border-gray-600" />
 
