@@ -17,6 +17,5 @@ export const CreateAccountFormSchema = z.object({
 
   password: z
     .string()
-    .min(3, { message: "Password must be at least 3 characters" })
-    .max(12, { message: "Password must be at most 12 characters" }),
+    .min(5, { message: "Password must be at least 5 characters" })
 });

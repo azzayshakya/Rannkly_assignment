@@ -22,9 +22,9 @@ export const useLoginMutation = () => {
       const { token, user } = data;
 
       toast.success(`Welcome back, 🎉`);
-      localStorage.setItem("wechatUserToken", token);
+      localStorage.setItem("raUserToken", token);
 
-      localStorage.setItem("wechatUser", JSON.stringify(user));
+      localStorage.setItem("raUser", JSON.stringify(user));
       setUser(data.user)
       navigate("/home");
     },

@@ -68,7 +68,7 @@
   }
 
   body {
-    @apply bg-navyblue text-foreground;
+    @apply  text-foreground;
   }
 
 
