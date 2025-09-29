@@ -142,3 +142,57 @@ export const GetAllEmployeesAndManagersApi = async () => {
     throw err;
   }
 };
+
+// Fetch tasks created by the logged-in user
+export const EmployeeFetchCreatedTasks = async () => {
+  try {
+    const response = await api.get("/employee/created", authHeaders());
+    return response.data.tasks || [];
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to fetch created tasks",
+    );
+    throw error.response?.data || error.message;
+  }
+};
+
+// Fetch tasks assigned to the logged-in user
+export const EmployeeFetchAssignedTasks = async () => {
+  try {
+    const response = await api.get("/employee/assigned", authHeaders());
+    return response.data.tasks || [];
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to fetch assigned tasks",
+    );
+    throw error.response?.data || error.message;
+  }
+};
+
+// Update a task by ID with partial updates
+export const EmployeeUpdateTaskApi = async ({ id, updatedData }) => {
+  try {
+    // Note: Your backend expects PUT but you wrote POST in example — adjust as needed
+    const response = await api.put(
+      `/api/tasks/${id}`,
+      updatedData,
+      authHeaders(),
+    );
+    toast.success("Task updated successfully");
+    return response.data.task;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Failed to update task");
+    throw error.response?.data || error.message;
+  }
+};
+
+export const EmployeeDeleteTaskApi = async (id) => {
+  try {
+    const response = await api.delete(`/api/tasks/${id}`, authHeaders());
+    toast.success("Task deleted successfully");
+    return response.data;
+  } catch (error) {
+    toast.error(error.response?.data?.message || "Failed to delete task");
+    throw error.response?.data || error.message;
+  }
+};

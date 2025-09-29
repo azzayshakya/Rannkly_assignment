@@ -13,6 +13,8 @@ import CreateTaskMainForm from "@/pages/TaskForm/TaskMainForm";
 import AllTasksPage from "@/pages/TaskForm/component/SeeAllTasks";
 import EmployeesPage from "@/pages/Employee/EmployeesPage";
 import EmployeesManagersPage from "@/pages/Employee/EmployeeManagerPage";
+import EmployeeAssignedTasksPage from "@/pages/Employee/EmployeeAssignedTask";
+import EmployeeCreatedTasksPage from "@/pages/Employee/EmployeeCreatedTasks";
 
 const router = createBrowserRouter(
   [
@@ -53,6 +55,19 @@ const router = createBrowserRouter(
           path: "/all-manager-employee",
           element: <EmployeesManagersPage />,
         },
+
+        // employee
+
+         {
+          path: "/Employee-assigned-task",
+          element: <EmployeeAssignedTasksPage />,
+        },
+        {
+          path: "/Employee-created-task",
+          element: <EmployeeCreatedTasksPage />,
+        },
+
+
         {
           path: "/login",
           element: <LoginMain />,

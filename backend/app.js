@@ -7,6 +7,8 @@ import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
 import adminRoutes from './routes/AdminRoutes.js'
 import taskFormRoutes from './routes/TaskFormRoutes.js'
+import employeeRoutes from './routes/EmployeeRoutes.js'
+
 
 
 dotenv.config();
@@ -33,6 +35,8 @@ app.get("/", (req, res) => {
 app.use("/auth", authRoutes);
 app.use("/admin",adminRoutes);
 app.use("/api", taskFormRoutes);
+app.use("/employee", employeeRoutes);
+
 
 
 export default app;
