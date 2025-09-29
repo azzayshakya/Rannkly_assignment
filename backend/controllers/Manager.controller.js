@@ -1,5 +1,4 @@
 import Task from "../models/task.model.js";
-import User from "../models/user.model.js";
 
 export const getAllTasksForManager = async (req, res) => {
   try {
@@ -9,7 +8,6 @@ export const getAllTasksForManager = async (req, res) => {
         message: "Access denied. Only Managers can access all tasks.",
       });
     }
-
     const tasks = await Task.find({})
       .populate("assignedTo", "name email role")
       .populate("createdBy", "name email role");
@@ -31,26 +29,9 @@ export const updateTaskByManager = async (req, res) => {
         .json({ success: false, message: "Task not found" });
     }
 
-    // if (task.createdBy !== req.user.email) {
-    //   return res.status(403).json({ success: false, message: "Not authorized to update this task" });
-    // }
-
     const { title, description, priority, dueDate, status, assignedTo } =
       req.body;
 
-    // ✅ Optionally update assigned user if passed
-    // if (assignedTo) {
-    //   const newAssignee = await User.findOne({ email: assignedTo });
-    //   if (!newAssignee || newAssignee.role === "Admin") {
-    //     return res.status(400).json({
-    //       success: false,
-    //       message: "Invalid user selected for assignment",
-    //     });
-    //   }
-    //   // task.assignedTo = assignedTo;
-    // }
-
-    // 🟢 Update other fields
     task.assignedTo = assignedTo || task.assignedTo;
     task.title = title || task.title;
     task.description = description || task.description;
@@ -77,16 +58,7 @@ export const deleteTaskByManager = async (req, res) => {
         .json({ success: false, message: "Task not found" });
     }
 
-    if (task.createdBy !== req.user.email) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Not authorized to delete this task",
-        });
-    }
-
-    await task.remove();
+    await task.deleteOne();
 
     res.status(200).json({ success: true, message: "Task deleted" });
   } catch (error) {
