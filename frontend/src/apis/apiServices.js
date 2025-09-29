@@ -143,7 +143,6 @@ export const GetAllEmployeesAndManagersApi = async () => {
   }
 };
 
-// Fetch tasks created by the logged-in user
 export const EmployeeFetchCreatedTasks = async () => {
   try {
     const response = await api.get("/employee/created", authHeaders());
@@ -156,7 +155,6 @@ export const EmployeeFetchCreatedTasks = async () => {
   }
 };
 
-// Fetch tasks assigned to the logged-in user
 export const EmployeeFetchAssignedTasks = async () => {
   try {
     const response = await api.get("/employee/assigned", authHeaders());
@@ -169,10 +167,8 @@ export const EmployeeFetchAssignedTasks = async () => {
   }
 };
 
-// Update a task by ID with partial updates
 export const EmployeeUpdateTaskApi = async ({ id, updatedData }) => {
   try {
-    // Note: Your backend expects PUT but you wrote POST in example — adjust as needed
     const response = await api.put(
       `/employee/update/${id}`,
       updatedData,
@@ -196,3 +192,49 @@ export const EmployeeDeleteTaskApi = async (id) => {
     throw error.response?.data || error.message;
   }
 };
+
+
+export const ManagerFetchAllTasksApi = async () => {
+  try {
+    const response = await api.get("/manager/created", authHeaders());
+    return response.data.tasks || [];
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to fetch tasks for manager"
+    );
+    throw error.response?.data || error.message;
+  }
+};
+
+
+export const ManagerUpdateTaskApi = async ({ id, updatedData }) => {
+  try {
+    const response = await api.put(
+      `/manager/update/${id}`,
+      updatedData,
+      authHeaders()
+    );
+    return response.data.task;
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to update task"
+    );
+    throw error.response?.data || error.message;
+  }
+};
+
+export const ManagerDeleteTaskApi = async (id) => {
+  try {
+    const response = await api.delete(
+      `/manager/delete/${id}`,
+      authHeaders()
+    );
+    return response.data;
+  } catch (error) {
+    toast.error(
+      error.response?.data?.message || "Failed to delete task"
+    );
+    throw error.response?.data || error.message;
+  }
+};
+

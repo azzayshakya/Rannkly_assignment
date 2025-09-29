@@ -15,6 +15,7 @@ import EmployeesPage from "@/pages/Employee/EmployeesPage";
 import EmployeesManagersPage from "@/pages/Employee/EmployeeManagerPage";
 import EmployeeAssignedTasksPage from "@/pages/Employee/EmployeeAssignedTask";
 import EmployeeCreatedTasksPage from "@/pages/Employee/EmployeeCreatedTasks";
+import ManagerAllTasksManagementPage from "@/pages/Manager/ManagerTaskManagementPage";
 
 const router = createBrowserRouter(
   [
@@ -58,7 +59,7 @@ const router = createBrowserRouter(
 
         // employee
 
-         {
+        {
           path: "/Employee-assigned-task",
           element: <EmployeeAssignedTasksPage />,
         },
@@ -66,7 +67,10 @@ const router = createBrowserRouter(
           path: "/Employee-created-task",
           element: <EmployeeCreatedTasksPage />,
         },
-
+        {
+          path: "manager-task-management",
+          element: <ManagerAllTasksManagementPage />,
+        },
 
         {
           path: "/login",
