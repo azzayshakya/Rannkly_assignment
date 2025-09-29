@@ -68,14 +68,7 @@ export const GetProfileApi = async () => {
   }
 };
 
-export const GetAllUsersApi = async () => {
-  try {
-    const response = await api.get("/auth/get-users", authHeaders());
-    return response.data;
-  } catch (error) {
-    throw error.response?.data || error.message;
-  }
-};
+
 
 export const UpdateUserRoleApi = async ({ userId, role }) => {
   try {
@@ -91,6 +84,32 @@ export const UpdateUserRoleApi = async ({ userId, role }) => {
   }
 };
 
+
+export const GetAllUsers = async () => {
+  try {
+    const response = await api.get("/auth/get-users-except-current-admin", authHeaders());
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+// create task api
+ 
+
+// 1. get all users
+
+export const getAllUsersExceptCurrentAndCurrent = async () => {
+  try {
+    const response = await api.get("/auth/get-users-except-current-admin", authHeaders());
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+
+
+// 2. create task api
 export const CreateTaskApi = async (data) => {
   try {
     const response = await api.post("/api/create-task", data, authHeaders());

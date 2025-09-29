@@ -55,6 +55,7 @@ export const createTask = async (req, res) => {
         message: "Missing required fields",
       });
     }
+    console.log(req.body)
 
     const userToAssign = await User.findOne({ email: assignedTo });
 
@@ -73,6 +74,7 @@ export const createTask = async (req, res) => {
       assignedTo: userToAssign.email,
       createdBy: req.user.email,
     });
+    
 
     res.status(201).json({
       success: true,

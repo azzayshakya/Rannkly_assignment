@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { GetAllUsersApi } from "@/apis/apiServices";
+import {  getAllUsersExceptCurrentAndCurrent } from "@/apis/apiServices";
 
 import { toast } from "react-toastify";
 
@@ -12,8 +12,9 @@ export const useGetAllUserMutation = () => {
     error,
     data,
   } = useMutation({
-    mutationFn: GetAllUsersApi,
+    mutationFn: getAllUsersExceptCurrentAndCurrent,
     onSuccess: () => {
+
     },
     onError: (error) => {
       toast.error(error.message);

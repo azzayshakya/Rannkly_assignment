@@ -123,7 +123,28 @@ export const logoutUser = async (req, res) => {
   }
 };
 
-export const getAllUsers = async (req, res) => {
+export const getAllUsersExceptCurrentAndCurrent = async (req, res) => {
+  try {
+    const currentUserId = req.user.id;
+
+    const users = await User.find({
+      _id: { $ne: currentUserId },
+      role: { $ne: "Admin" },
+    }).select("-password");
+console.log(users)
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+export const getAllUsersExceptCurrent = async (req, res) => {
   try {
     const token = req.headers.authorization?.split(" ")[1];
 
@@ -131,7 +152,7 @@ export const getAllUsers = async (req, res) => {
     const currentUserId = decoded.id;
 
     const users = await User.find({ _id: { $ne: currentUserId } });
-    
+
     res.status(200).json({
       success: true,
       users,
@@ -145,6 +166,41 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
+export const getAllUsersIncludingCurrent = async (req, res) => {
+  try {
+    const users = await User.find().select("-password");
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
+
+export const getAllUsersExceptAdmin = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $ne: "admin" } }).select(
+      "-password"
+    );
+
+    res.status(200).json({
+      success: true,
+      users,
+    });
+  } catch (error) {
+    console.error("Error getting users:", error);
+    res.status(500).json({
+      success: false,
+      message: "Something went wrong",
+    });
+  }
+};
 
 export const getAllEmployees = async (req, res) => {
   try {
@@ -158,7 +214,9 @@ export const getAllEmployees = async (req, res) => {
 
 export const getAllEmployeesAndManagers = async (req, res) => {
   try {
-    const users = await User.find({ role: { $in: ["Employee", "Manager"] } }).select("-password");
+    const users = await User.find({
+      role: { $in: ["Employee", "Manager"] },
+    }).select("-password");
     res.status(200).json({ success: true, users });
   } catch (error) {
     console.error("Error fetching employees and managers:", error);
