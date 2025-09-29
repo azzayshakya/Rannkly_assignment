@@ -2,7 +2,7 @@ import Task from "../models/task.model.js";
 
 export const getAssignedTasks = async (req, res) => {
   try {
-    console.log("and the role is",req.user.role)
+    console.log("and the role is", req.user.role);
     if (req.user.role !== "Employee") {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
@@ -30,11 +30,18 @@ export const updateTaskByCreator = async (req, res) => {
     const task = await Task.findById(req.params.id);
 
     if (!task) {
-      return res.status(404).json({ success: false, message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
 
-    if (task.createdBy._id.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ success: false, message: "Not authorized to update this task" });
+    if (task.createdBy.toString() !== req.user.email.toString()) {
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Not authorized to update this task",
+        });
     }
 
     const { title, description, priority, dueDate, status } = req.body;
@@ -59,11 +66,18 @@ export const deleteTaskByCreator = async (req, res) => {
     const task = await Task.findById(req.params.id);
 
     if (!task) {
-      return res.status(404).json({ success: false, message: "Task not found" });
+      return res
+        .status(404)
+        .json({ success: false, message: "Task not found" });
     }
 
     if (task.createdBy._id.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ success: false, message: "Not authorized to delete this task" });
+      return res
+        .status(403)
+        .json({
+          success: false,
+          message: "Not authorized to delete this task",
+        });
     }
 
     await task.remove();

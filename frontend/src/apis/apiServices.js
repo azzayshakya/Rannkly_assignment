@@ -174,7 +174,7 @@ export const EmployeeUpdateTaskApi = async ({ id, updatedData }) => {
   try {
     // Note: Your backend expects PUT but you wrote POST in example — adjust as needed
     const response = await api.put(
-      `/api/tasks/${id}`,
+      `/employee/update/${id}`,
       updatedData,
       authHeaders(),
     );
