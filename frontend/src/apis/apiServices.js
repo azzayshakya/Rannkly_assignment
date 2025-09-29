@@ -122,24 +122,21 @@ export const updateTaskApi = async ({ id, updates }) => {
 
 export const GetAllEmployeesApi = async () => {
   try {
-    const res = await axios.get("/auth/employees", authHeaders());
-    console.log("✅ Employees API response:", res.data.users);
+    const res = await api.get("/auth/employees", authHeaders());
     return res.data.users || [];
   } catch (err) {
-    console.error("❌ Employees API error:", err.response?.data || err.message);
+    console.error(" Employees API error:", err.response?.data || err.message);
     throw err;
   }
 };
 
-// Get Employees + Managers
 export const GetAllEmployeesAndManagersApi = async () => {
   try {
-    const res = await axios.get("/auth/employees-managers", authHeaders());
-    console.log("✅ Employees + Managers API response:", res.data.users);
+    const res = await api.get("/auth/employees-managers", authHeaders());
     return res.data.users || [];
   } catch (err) {
     console.error(
-      "❌ Employees + Managers API error:",
+      "Employees + Managers API error:",
       err.response?.data || err.message,
     );
     throw err;

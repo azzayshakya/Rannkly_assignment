@@ -1,8 +1,6 @@
-// src/hooks/useGetAllEmployeesAndManagersMutation.js
 import { useMutation } from "@tanstack/react-query";
 import { GetAllEmployeesAndManagersApi } from "@/apis/apiServices";
 import { toast } from "react-toastify";
-
 export const useGetAllEmployeesAndManagersMutation = () => {
   const {
     mutate: getAllEmployeesAndManagersMutation,
