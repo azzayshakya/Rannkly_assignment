@@ -20,7 +20,8 @@ const EmployeeAssignedTasksPage = () => {
             <p>{task.description}</p>
             <p>Status: {task.status}</p>
             <p>Due: {new Date(task.dueDate).toLocaleDateString()}</p>
-            <p>Created by: {task.createdBy.name}</p>
+            <p>Created by: {task.createdBy}</p>
+            <p>Assigned to: {task.assignedTo}</p>
           </div>
         ))
       )}
