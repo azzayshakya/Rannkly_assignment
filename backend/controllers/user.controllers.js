@@ -131,7 +131,6 @@ export const getAllUsersExceptCurrentAndCurrent = async (req, res) => {
       _id: { $ne: currentUserId },
       role: { $ne: "Admin" },
     }).select("-password");
-console.log(users)
     res.status(200).json({
       success: true,
       users,

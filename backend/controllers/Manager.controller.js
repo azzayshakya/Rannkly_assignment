@@ -2,12 +2,12 @@ import Task from "../models/task.model.js";
 
 export const getAllTasksForManager = async (req, res) => {
   try {
-    if (req.user.role !== "Manager") {
-      return res.status(403).json({
-        success: false,
-        message: "Access denied. Only Managers can access all tasks.",
-      });
-    }
+    // if (req.user.role !== "Manager") {
+    //   return res.status(403).json({
+    //     success: false,
+    //     message: "Access denied. Only Managers can access all tasks.",
+    //   });
+    // }
     const tasks = await Task.find({})
       .populate("assignedTo", "name email role")
       .populate("createdBy", "name email role");
