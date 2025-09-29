@@ -99,3 +99,49 @@ export const CreateTaskApi = async (data) => {
     throw error.response?.data || error.message;
   }
 };
+
+export const getAllTasksApi = async () => {
+  try {
+    const response = await api.get("/api/all-tasks", authHeaders());
+
+    return response.data.tasks || [];
+  } catch (err) {
+    console.error(" API error", err.response?.data || err.message);
+    throw err;
+  }
+};
+
+export const updateTaskApi = async ({ id, updates }) => {
+  try {
+    const response = await api.post(`/tasks/${id}`, updates, authHeaders());
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+export const GetAllEmployeesApi = async () => {
+  try {
+    const res = await axios.get("/auth/employees", authHeaders());
+    console.log("✅ Employees API response:", res.data.users);
+    return res.data.users || [];
+  } catch (err) {
+    console.error("❌ Employees API error:", err.response?.data || err.message);
+    throw err;
+  }
+};
+
+// Get Employees + Managers
+export const GetAllEmployeesAndManagersApi = async () => {
+  try {
+    const res = await axios.get("/auth/employees-managers", authHeaders());
+    console.log("✅ Employees + Managers API response:", res.data.users);
+    return res.data.users || [];
+  } catch (err) {
+    console.error(
+      "❌ Employees + Managers API error:",
+      err.response?.data || err.message,
+    );
+    throw err;
+  }
+};

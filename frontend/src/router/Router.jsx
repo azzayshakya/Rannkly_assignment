@@ -10,6 +10,9 @@ import CreateAccountMain from "@/auth/create-account/CreateAccountMain";
 import MyProfile from "@/pages/common/MyProfile";
 import UserRolesManagement from "@/pages/Admin/UserRolesManagment";
 import CreateTaskMainForm from "@/pages/TaskForm/TaskMainForm";
+import AllTasksPage from "@/pages/TaskForm/component/SeeAllTasks";
+import EmployeesPage from "@/pages/Employee/EmployeesPage";
+import EmployeesManagersPage from "@/pages/Employee/EmployeeManagerPage";
 
 const router = createBrowserRouter(
   [
@@ -37,6 +40,18 @@ const router = createBrowserRouter(
         {
           path: "/create-task",
           element: <CreateTaskMainForm />,
+        },
+        {
+          path: "/update-task",
+          element: <AllTasksPage />,
+        },
+        {
+          path: "/all-employee",
+          element: <EmployeesPage />,
+        },
+        {
+          path: "/all-manager-employee",
+          element: <EmployeesManagersPage />,
         },
         {
           path: "/login",

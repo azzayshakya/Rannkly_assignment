@@ -144,3 +144,24 @@ export const getAllUsers = async (req, res) => {
     });
   }
 };
+
+
+export const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await User.find({ role: "Employee" }).select("-password");
+    res.status(200).json({ success: true, users: employees });
+  } catch (error) {
+    console.error("Error fetching employees:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+export const getAllEmployeesAndManagers = async (req, res) => {
+  try {
+    const users = await User.find({ role: { $in: ["Employee", "Manager"] } }).select("-password");
+    res.status(200).json({ success: true, users });
+  } catch (error) {
+    console.error("Error fetching employees and managers:", error);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};

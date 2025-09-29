@@ -1,5 +1,7 @@
 import { Router } from "express";
 import {
+  getAllEmployees,
+  getAllEmployeesAndManagers,
   getAllUsers,
   getProfile,
   loginUser,
@@ -15,5 +17,17 @@ router.post("/login", validateLogin, loginUser);
 router.get("/profile", authMiddleware, getProfile);
 router.get("/get-users", authMiddleware, getAllUsers);
 
+router.get(
+  "/employees",
+  authMiddleware,
+  //  authorizeRoles("Admin", "Manager"),
+  getAllEmployees
+);
+router.get(
+  "/employees-managers",
+  authMiddleware,
+  //  authorizeRoles("Admin"),
+  getAllEmployeesAndManagers
+);
 
 export default router;
