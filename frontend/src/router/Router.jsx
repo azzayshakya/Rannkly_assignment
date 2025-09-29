@@ -68,7 +68,7 @@ const router = createBrowserRouter(
           element: <EmployeeCreatedTasksPage />,
         },
         {
-          path: "manager-task-management",
+          path: "/task-management",
           element: <ManagerAllTasksManagementPage />,
         },
 

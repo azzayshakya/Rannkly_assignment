@@ -6,6 +6,7 @@ export default function HomeTopBar() {
   const navigate = useNavigate();
   const { user, logout } = useContext(UserContext);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isTaskMenuOpen, setIsTaskMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     localStorage.removeItem("raUser");
@@ -31,14 +32,111 @@ export default function HomeTopBar() {
           >
             Home
           </Link>
-          
+
           <Link
             to="/profile"
             className="text-white transition-colors hover:text-primary"
           >
             Profile
           </Link>
-         
+
+          {user?.role === "Manager" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+
+                  <Link
+                    to="/task-management"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Update Tasks
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          {user?.role === "Employee" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+                  <Link
+                    to="/Employee-created-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Created Tasks
+                  </Link>
+                  <Link
+                    to="/Employee-assigned-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Assigned Tasks
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          {user?.role === "admin" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+
+                  <Link
+                    to="/task-management"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Update Tasks
+                  </Link>
+
+                  <Link
+                    to="/user-roles-management"
+                    className="text-white transition-colors hover:text-primary"
+                  >
+                    Manage Users
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          
         </div>
 
         <div className="hidden items-center space-x-3 md:flex">
@@ -58,14 +156,12 @@ export default function HomeTopBar() {
               </button>
             </>
           ) : (
-            <>
-              <button
-                onClick={handleLogout}
-                className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-600"
-              >
-                Log Out
-              </button>
-            </>
+            <button
+              onClick={handleLogout}
+              className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-600"
+            >
+              Log Out
+            </button>
           )}
         </div>
 
@@ -110,6 +206,102 @@ export default function HomeTopBar() {
           Profile
         </Link>
 
+       {user?.role === "Manager" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+
+                  <Link
+                    to="/task-management"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Update Tasks
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          {user?.role === "Employee" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+                  <Link
+                    to="/Employee-created-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Created Tasks
+                  </Link>
+                  <Link
+                    to="/Employee-assigned-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Assigned Tasks
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
+          {user?.role === "admin" && (
+            <div className="relative">
+              <button
+                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+                className="text-white transition-colors hover:text-primary"
+              >
+                Tasks ▾
+              </button>
+              {isTaskMenuOpen && (
+                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                  <Link
+                    to="/create-task"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Create Task
+                  </Link>
+
+                  <Link
+                    to="/task-management"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Update Tasks
+                  </Link>
+
+                  <Link
+                    to="/user-roles-management"
+                    className="text-white transition-colors hover:text-primary"
+                  >
+                    Manage Users
+                  </Link>
+                </div>
+              )}
+            </div>
+          )}
+
         <hr className="border-gray-600" />
 
         {!user ? (
@@ -128,14 +320,12 @@ export default function HomeTopBar() {
             </button>
           </>
         ) : (
-          <>
-            <button
-              onClick={handleLogout}
-              className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-600"
-            >
-              Log Out
-            </button>
-          </>
+          <button
+            onClick={handleLogout}
+            className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm text-white transition-colors hover:bg-red-600"
+          >
+            Log Out
+          </button>
         )}
       </div>
     </nav>
