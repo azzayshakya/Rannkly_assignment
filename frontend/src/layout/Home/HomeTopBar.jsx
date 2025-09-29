@@ -100,8 +100,15 @@ export default function HomeTopBar() {
               )}
             </div>
           )}
-
-          {user?.role === "admin" && (
+          {user?.role === "Admin" && (
+            <Link
+              to="/user-roles-management"
+              className="text-white transition-colors hover:text-primary"
+            >
+              Manage Users
+            </Link>
+          )}
+          {user?.role === "Admin" && (
             <div className="relative">
               <button
                 onClick={() => setIsTaskMenuOpen((prev) => !prev)}
@@ -124,19 +131,10 @@ export default function HomeTopBar() {
                   >
                     Update Tasks
                   </Link>
-
-                  <Link
-                    to="/user-roles-management"
-                    className="text-white transition-colors hover:text-primary"
-                  >
-                    Manage Users
-                  </Link>
                 </div>
               )}
             </div>
           )}
-
-          
         </div>
 
         <div className="hidden items-center space-x-3 md:flex">
@@ -206,101 +204,101 @@ export default function HomeTopBar() {
           Profile
         </Link>
 
-       {user?.role === "Manager" && (
-            <div className="relative">
-              <button
-                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
-                className="text-white transition-colors hover:text-primary"
-              >
-                Tasks ▾
-              </button>
-              {isTaskMenuOpen && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
-                  <Link
-                    to="/create-task"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Create Task
-                  </Link>
+        {user?.role === "Manager" && (
+          <div className="relative">
+            <button
+              onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+              className="text-white transition-colors hover:text-primary"
+            >
+              Tasks ▾
+            </button>
+            {isTaskMenuOpen && (
+              <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                <Link
+                  to="/create-task"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Create Task
+                </Link>
 
-                  <Link
-                    to="/task-management"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Update Tasks
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+                <Link
+                  to="/task-management"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Update Tasks
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
-          {user?.role === "Employee" && (
-            <div className="relative">
-              <button
-                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
-                className="text-white transition-colors hover:text-primary"
-              >
-                Tasks ▾
-              </button>
-              {isTaskMenuOpen && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
-                  <Link
-                    to="/create-task"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Create Task
-                  </Link>
-                  <Link
-                    to="/Employee-created-task"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Created Tasks
-                  </Link>
-                  <Link
-                    to="/Employee-assigned-task"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Assigned Tasks
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+        {user?.role === "Employee" && (
+          <div className="relative">
+            <button
+              onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+              className="text-white transition-colors hover:text-primary"
+            >
+              Tasks ▾
+            </button>
+            {isTaskMenuOpen && (
+              <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                <Link
+                  to="/create-task"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Create Task
+                </Link>
+                <Link
+                  to="/Employee-created-task"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Created Tasks
+                </Link>
+                <Link
+                  to="/Employee-assigned-task"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Assigned Tasks
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
-          {user?.role === "admin" && (
-            <div className="relative">
-              <button
-                onClick={() => setIsTaskMenuOpen((prev) => !prev)}
-                className="text-white transition-colors hover:text-primary"
-              >
-                Tasks ▾
-              </button>
-              {isTaskMenuOpen && (
-                <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
-                  <Link
-                    to="/create-task"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Create Task
-                  </Link>
+        {user?.role === "Admin" && (
+          <div className="relative">
+            <button
+              onClick={() => setIsTaskMenuOpen((prev) => !prev)}
+              className="text-white transition-colors hover:text-primary"
+            >
+              Tasks ▾
+            </button>
+            {isTaskMenuOpen && (
+              <div className="absolute left-0 mt-2 w-48 rounded-md bg-white shadow-lg">
+                <Link
+                  to="/create-task"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Create Task
+                </Link>
 
-                  <Link
-                    to="/task-management"
-                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  >
-                    Update Tasks
-                  </Link>
+                <Link
+                  to="/task-management"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                >
+                  Update Tasks
+                </Link>
 
-                  <Link
-                    to="/user-roles-management"
-                    className="text-white transition-colors hover:text-primary"
-                  >
-                    Manage Users
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+                <Link
+                  to="/user-roles-management"
+                  className="text-white transition-colors hover:text-primary"
+                >
+                  Manage Users
+                </Link>
+              </div>
+            )}
+          </div>
+        )}
 
         <hr className="border-gray-600" />
 
