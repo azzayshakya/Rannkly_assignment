@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useCreatedTasks } from "./hooks/useEmpCreatedTasks.js";
 import { useDeleteTask } from "./hooks/useEmpDeleteTask.js";
 import { useUpdateTask } from "./hooks/useEmpUpdateTask.js";
@@ -16,7 +16,8 @@ const EmployeeCreatedTasksPage = () => {
     priority: "",
   });
 
-  if (isLoading) return <p className="text-center mt-10 text-gray-500">Loading...</p>;
+  if (isLoading)
+    return <p className="mt-10 text-center text-gray-500">Loading...</p>;
 
   const handleEditClick = (task) => {
     setEditingTaskId(task._id);
@@ -64,8 +65,8 @@ const EmployeeCreatedTasksPage = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto p-4 font-sans">
-      <h2 className="text-3xl font-semibold text-center text-gray-800 mb-8">
+    <div className="mx-auto max-w-3xl p-4 font-sans">
+      <h2 className="mb-8 text-center text-3xl font-semibold text-gray-800">
         Tasks You Created
       </h2>
 
@@ -75,13 +76,15 @@ const EmployeeCreatedTasksPage = () => {
         tasks.map((task) => (
           <div
             key={task._id}
-            className="bg-white shadow-md rounded-lg p-6 mb-6 transition-shadow hover:shadow-lg"
+            className="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow hover:shadow-lg"
           >
             {editingTaskId === task._id ? (
               <>
-                {/* Title */}
                 <div className="mb-4">
-                  <label className="block mb-1 font-semibold text-gray-700" htmlFor="title">
+                  <label
+                    className="mb-1 block font-semibold text-gray-700"
+                    htmlFor="title"
+                  >
                     Title
                   </label>
                   <input
@@ -90,14 +93,16 @@ const EmployeeCreatedTasksPage = () => {
                     name="title"
                     value={formData.title}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     autoFocus
                   />
                 </div>
 
-                {/* Description */}
                 <div className="mb-4">
-                  <label className="block mb-1 font-semibold text-gray-700" htmlFor="description">
+                  <label
+                    className="mb-1 block font-semibold text-gray-700"
+                    htmlFor="description"
+                  >
                     Description
                   </label>
                   <textarea
@@ -106,13 +111,15 @@ const EmployeeCreatedTasksPage = () => {
                     value={formData.description}
                     onChange={handleInputChange}
                     rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full resize-none rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   />
                 </div>
 
-                {/* Status */}
                 <div className="mb-4">
-                  <label className="block mb-1 font-semibold text-gray-700" htmlFor="status">
+                  <label
+                    className="mb-1 block font-semibold text-gray-700"
+                    htmlFor="status"
+                  >
                     Status
                   </label>
                   <select
@@ -120,7 +127,7 @@ const EmployeeCreatedTasksPage = () => {
                     name="status"
                     value={formData.status}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                    className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="Pending">Pending</option>
                     <option value="InProgress">In Progress</option>
@@ -128,9 +135,11 @@ const EmployeeCreatedTasksPage = () => {
                   </select>
                 </div>
 
-                {/* Priority */}
                 <div className="mb-6">
-                  <label className="block mb-1 font-semibold text-gray-700" htmlFor="priority">
+                  <label
+                    className="mb-1 block font-semibold text-gray-700"
+                    htmlFor="priority"
+                  >
                     Priority
                   </label>
                   <select
@@ -138,7 +147,7 @@ const EmployeeCreatedTasksPage = () => {
                     name="priority"
                     value={formData.priority}
                     onChange={handleInputChange}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 cursor-pointer"
+                    className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
                   >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -150,8 +159,10 @@ const EmployeeCreatedTasksPage = () => {
                   <button
                     onClick={() => handleSave(task._id)}
                     disabled={updateTask.isLoading}
-                    className={`flex-1 px-4 py-2 font-semibold text-white rounded-md ${
-                      updateTask.isLoading ? "bg-green-300 cursor-not-allowed" : "bg-green-600 hover:bg-green-700"
+                    className={`flex-1 rounded-md px-4 py-2 font-semibold text-white ${
+                      updateTask.isLoading
+                        ? "cursor-not-allowed bg-green-300"
+                        : "bg-green-600 hover:bg-green-700"
                     } transition`}
                   >
                     {updateTask.isLoading ? "Saving..." : "Save"}
@@ -159,60 +170,76 @@ const EmployeeCreatedTasksPage = () => {
                   <button
                     onClick={handleCancel}
                     disabled={updateTask.isLoading}
-                    className="flex-1 px-4 py-2 font-semibold text-white bg-gray-500 rounded-md hover:bg-gray-600 transition"
+                    className="flex-1 rounded-md bg-gray-500 px-4 py-2 font-semibold text-white transition hover:bg-gray-600"
                   >
                     Cancel
                   </button>
                 </div>
               </>
             ) : (
-              <>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{task.title}</h3>
-                <p className="text-gray-700 mb-3">{task.description}</p>
-                <p className="text-gray-600 mb-1">
-                  <span className="font-semibold">Created by:</span> {task.createdBy}
-                </p>
-                <p className="text-gray-600 mb-1">
-                  <span className="font-semibold">Assigned to:</span> {task.assignedTo}
-                </p>
+              <div className="rounded-lg border border-gray-200 bg-white p-6">
+                <h3 className="mb-4 text-xl font-bold text-gray-900">
+                  {task.title}
+                </h3>
+                <p className="mb-6 text-gray-700">{task.description}</p>
 
-                <p className="mb-1">
-                  <span className="font-semibold">Status:</span>{" "}
-                  <span
-                    className={`inline-block px-2 py-1 text-white text-sm rounded ${
-                      statusColors[task.status] || "bg-gray-400"
-                    }`}
-                  >
-                    {task.status}
-                  </span>
-                </p>
+                <dl className="grid grid-cols-2 gap-x-4 gap-y-3 text-sm">
+                  <div>
+                    <dt className="font-semibold text-gray-600">
+                      Assigned to:
+                    </dt>
+                    <dd className="text-gray-800">{task.assignedTo}</dd>
+                  </div>
 
-                <p className="mb-4">
-                  <span className="font-semibold">Priority:</span>{" "}
-                  <span
-                    className={`inline-block px-2 py-1 text-white text-sm rounded ${
-                      priorityColors[task.priority] || "bg-gray-400"
-                    }`}
-                  >
-                    {task.priority}
-                  </span>
-                </p>
+                  <div>
+                    <dt className="font-semibold text-gray-600">Status:</dt>
+                    <dd>
+                      <span
+                        className={`text-xs inline-block rounded px-2 py-1 text-white ${
+                          statusColors[task.status] || "bg-gray-400"
+                        }`}
+                      >
+                        {task.status}
+                      </span>
+                    </dd>
+                  </div>
 
-                <div className="flex gap-4">
+                  <div>
+                    <dt className="font-semibold text-gray-600">Priority:</dt>
+                    <dd>
+                      <span
+                        className={`text-xs inline-block rounded px-2 py-1 text-white ${
+                          priorityColors[task.priority] || "bg-gray-400"
+                        }`}
+                      >
+                        {task.priority}
+                      </span>
+                    </dd>
+                  </div>
+
+                  <div>
+                    <dt className="font-semibold text-gray-600">Due Date:</dt>
+                    <dd className="text-gray-800">
+                      {new Date(task.dueDate).toLocaleDateString()}
+                    </dd>
+                  </div>
+                </dl>
+
+                <div className="mt-6 flex gap-4">
                   <button
                     onClick={() => handleEditClick(task)}
-                    className="flex-1 px-4 py-2 font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 transition"
+                    className="flex-1 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(task._id)}
-                    className="flex-1 px-4 py-2 font-semibold text-white bg-red-600 rounded-md hover:bg-red-700 transition"
+                    className="flex-1 rounded-md bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
                   >
                     Delete
                   </button>
                 </div>
-              </>
+              </div>
             )}
           </div>
         ))

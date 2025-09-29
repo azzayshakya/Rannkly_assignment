@@ -193,17 +193,15 @@ export const EmployeeUpdateTaskApi = async ({ id, updatedData }) => {
       updatedData,
       authHeaders(),
     );
-    toast.success("Task updated successfully");
     return response.data.task;
   } catch (error) {
-    toast.error(error.response?.data?.message || "Failed to update task");
     throw error.response?.data || error.message;
   }
 };
 
 export const EmployeeDeleteTaskApi = async (id) => {
   try {
-    const response = await api.delete(`/api/tasks/${id}`, authHeaders());
+    const response = await api.delete(`/employee/delete/${id}`, authHeaders());
     toast.success("Task deleted successfully");
     return response.data;
   } catch (error) {

@@ -2,12 +2,12 @@ import Task from "../models/task.model.js";
 
 export const getAssignedTasks = async (req, res) => {
   try {
-    console.log("and the role is", req.user.role);
     if (req.user.role !== "Employee") {
       return res.status(403).json({ success: false, message: "Access denied" });
     }
-
-    const tasks = await Task.find({ "assignedTo._id": req.user._id });
+    const tasks = await Task.find({ assignedTo: req.user.email }).sort({
+      createdAt: -1,
+    });
     res.status(200).json({ success: true, tasks });
   } catch (error) {
     console.error("Error fetching assigned tasks:", error);
@@ -17,7 +17,9 @@ export const getAssignedTasks = async (req, res) => {
 
 export const getCreatedTasks = async (req, res) => {
   try {
-    const tasks = await Task.find({ "createdBy._id": req.user._id });
+    const tasks = await Task.find({ "createdBy._id": req.user._id }).sort({
+      createdAt: -1,
+    });
     res.status(200).json({ success: true, tasks });
   } catch (error) {
     console.error("Error fetching created tasks:", error);
@@ -36,12 +38,10 @@ export const updateTaskByCreator = async (req, res) => {
     }
 
     if (task.createdBy.toString() !== req.user.email.toString()) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Not authorized to update this task",
-        });
+      return res.status(403).json({
+        success: false,
+        message: "Not authorized to update this task",
+      });
     }
 
     const { title, description, priority, dueDate, status } = req.body;
@@ -64,23 +64,12 @@ export const updateTaskByCreator = async (req, res) => {
 export const deleteTaskByCreator = async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
-
     if (!task) {
       return res
         .status(404)
         .json({ success: false, message: "Task not found" });
     }
-
-    if (task.createdBy._id.toString() !== req.user._id.toString()) {
-      return res
-        .status(403)
-        .json({
-          success: false,
-          message: "Not authorized to delete this task",
-        });
-    }
-
-    await task.remove();
+    await task.deleteOne();
     res.status(200).json({ success: true, message: "Task deleted" });
   } catch (error) {
     console.error("Error deleting task:", error);

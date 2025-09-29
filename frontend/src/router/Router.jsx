@@ -48,10 +48,15 @@ const router = createBrowserRouter(
           path: "/update-task",
           element: <AllTasksPage />,
         },
+
+        // not required 
+        
         {
           path: "/all-employee",
           element: <EmployeesPage />,
         },
+
+        // not required
         {
           path: "/all-manager-employee",
           element: <EmployeesManagersPage />,
