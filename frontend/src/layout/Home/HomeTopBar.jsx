@@ -22,7 +22,7 @@ export default function HomeTopBar() {
           className="flex cursor-pointer items-center space-x-2"
           onClick={() => navigate("/home")}
         >
-          <h1 className="text-xl font-bold text-white md:text-2xl">STC</h1>
+          <h1 className="text-xl font-bold text-white md:text-2xl">Rannkly</h1>
         </div>
 
         <div className="hidden items-center space-x-6 md:flex">

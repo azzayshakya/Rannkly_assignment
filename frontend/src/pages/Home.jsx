@@ -46,14 +46,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.2, duration: 1 }}
-          className="text-sm text-gray-400 italic"
-        >
-          Loading your workspace...
-        </motion.p>
+      
       </main>
     </div>
   );
