@@ -3,41 +3,53 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const getAllUsersIncludingCurrent = async (req, res) => {
+export const getUsersIncludingCurrent = async (req, res) => {
   try {
     const users = await User.find().select("-password");
 
+    if (!users.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No users found",
+      });
+    }
+
     res.status(200).json({
       success: true,
-      users,
+      message: "Users fetched successfully",
+      data: users,
     });
   } catch (error) {
-    console.error("Error getting users:", error);
+    console.error("Error fetching users:", error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Failed to fetch users",
     });
   }
 };
 
-export const getAllUsersExceptCurrent = async (req, res) => {
+export const getUsersExcludingCurrent = async (req, res) => {
   try {
     const currentUserId = req.user.id;
-    const users = await User.find({ _id: { $ne: currentUserId } });
+    const users = await User.find({ _id: { $ne: currentUserId } }).select(
+      "-password"
+    );
 
     res.status(200).json({
       success: true,
-      users,
+      message: "Users excluding current fetched successfully",
+      data: users,
     });
   } catch (error) {
-    console.error("Error getting users:", error);
+    console.error("Error fetching users excluding current:", error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Failed to fetch users excluding current",
     });
   }
 };
-export const getAllUsersExceptCurrentAndAdmin = async (req, res) => {
+
+export const getUsersExcludingCurrentAndAdmin = async (req, res) => {
   try {
     const currentUserId = req.user.id;
 
@@ -45,67 +57,73 @@ export const getAllUsersExceptCurrentAndAdmin = async (req, res) => {
       _id: { $ne: currentUserId },
       role: { $ne: "Admin" },
     }).select("-password");
+
     res.status(200).json({
       success: true,
-      users,
+      message: "Users excluding current and admin fetched successfully",
+      data: users,
     });
   } catch (error) {
-    console.error("Error getting users:", error);
+    console.error("Error fetching users excluding current and admin:", error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Failed to fetch users excluding current and admin",
     });
   }
 };
 
-export const getAllUsersExceptAdmin = async (req, res) => {
+export const getUsersExcludingAdmin = async (req, res) => {
   try {
-    const users = await User.find({ role: { $ne: "Admin" } }).select(
-      "-password"
-    );
+    const users = await User.find({ role: { $ne: "Admin" } }).select("-password");
+
     res.status(200).json({
       success: true,
-      users,
+      message: "Users excluding admin fetched successfully",
+      data: users,
     });
   } catch (error) {
-    console.error("Error getting users:", error);
+    console.error("Error fetching users excluding admin:", error);
     res.status(500).json({
       success: false,
-      message: "Something went wrong",
+      message: "Failed to fetch users excluding admin",
     });
   }
 };
 
-export const getAllEmployees = async (req, res) => {
+export const getEmployees = async (req, res) => {
   try {
     const users = await User.find({ role: "Employee" }).select("-password");
+
     res.status(200).json({
       success: true,
-      users,
+      message: "Employees fetched successfully",
+      data: users,
     });
   } catch (error) {
     console.error("Error fetching employees:", error);
     res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Failed to fetch employees",
     });
   }
 };
 
-export const getAllEmployeesAndManagers = async (req, res) => {
+export const getEmployeesAndManagers = async (req, res) => {
   try {
     const users = await User.find({
       role: { $in: ["Employee", "Manager"] },
     }).select("-password");
+
     res.status(200).json({
       success: true,
-      users,
+      message: "Employees and managers fetched successfully",
+      data: users,
     });
   } catch (error) {
     console.error("Error fetching employees and managers:", error);
     res.status(500).json({
       success: false,
-      message: "Server error",
+      message: "Failed to fetch employees and managers",
     });
   }
 };
