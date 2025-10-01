@@ -5,13 +5,11 @@ import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import authRoutes from "./routes/authRoutes.js";
-import adminRoutes from './routes/AdminRoutes.js'
-import taskFormRoutes from './routes/TaskFormRoutes.js'
-import employeeRoutes from './routes/EmployeeRoutes.js'
-import managerRoutes from './routes/ManagerRoutes.js'
-
-
-
+import adminRoutes from "./routes/AdminRoutes.js";
+import taskFormRoutes from "./routes/TaskFormRoutes.js";
+import employeeRoutes from "./routes/EmployeeRoutes.js";
+import managerRoutes from "./routes/ManagerRoutes.js";
+import userRoutes from "./routes/getUserRoutes.js";
 
 dotenv.config();
 const app = express();
@@ -25,7 +23,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: ["http://localhost:5173", "http://localhost:3000"],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"],
     credentials: true,
   })
 );
@@ -35,12 +33,10 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", authRoutes);
-app.use("/admin",adminRoutes);
+app.use("/admin", adminRoutes);
 app.use("/api", taskFormRoutes);
 app.use("/employee", employeeRoutes);
 app.use("/manager", managerRoutes);
-
-
-
+app.use("/get-users", userRoutes);
 
 export default app;
