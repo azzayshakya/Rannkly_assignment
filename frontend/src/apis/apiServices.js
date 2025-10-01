@@ -68,8 +68,6 @@ export const GetProfileApi = async () => {
   }
 };
 
-
-
 export const UpdateUserRoleApi = async ({ userId, role }) => {
   try {
     const response = await api.patch(
@@ -84,30 +82,31 @@ export const UpdateUserRoleApi = async ({ userId, role }) => {
   }
 };
 
-
 export const GetAllUsers = async () => {
   try {
-    const response = await api.get("/auth/get-users-except-current-admin", authHeaders());
+    const response = await api.get(
+      "/auth/get-users-except-current-admin",
+      authHeaders(),
+    );
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
   }
 };
 // create task api
- 
 
-// 1. get all users
-
-export const getAllUsersExceptCurrentAndCurrent = async () => {
+// in use : create task - assign task option
+export const getAllUsersExceptCurrentAndAdmin = async () => {
   try {
-    const response = await api.get("/auth/get-users-except-current-admin", authHeaders());
+    const response = await api.get(
+      "/get-users/exclude-current-and-admin",
+      authHeaders(),
+    );
     return response.data;
   } catch (error) {
     throw error.response?.data || error.message;
   }
 };
-
-
 
 // 2. create task api
 export const CreateTaskApi = async (data) => {
@@ -210,48 +209,38 @@ export const EmployeeDeleteTaskApi = async (id) => {
   }
 };
 
-
 export const ManagerFetchAllTasksApi = async () => {
   try {
     const response = await api.get("/manager/created", authHeaders());
     return response.data.tasks || [];
   } catch (error) {
     toast.error(
-      error.response?.data?.message || "Failed to fetch tasks for manager"
+      error.response?.data?.message || "Failed to fetch tasks for manager",
     );
     throw error.response?.data || error.message;
   }
 };
-
 
 export const ManagerUpdateTaskApi = async ({ id, updatedData }) => {
   try {
     const response = await api.put(
       `/manager/update/${id}`,
       updatedData,
-      authHeaders()
+      authHeaders(),
     );
     return response.data.task;
   } catch (error) {
-    toast.error(
-      error.response?.data?.message || "Failed to update task"
-    );
+    toast.error(error.response?.data?.message || "Failed to update task");
     throw error.response?.data || error.message;
   }
 };
 
 export const ManagerDeleteTaskApi = async (id) => {
   try {
-    const response = await api.delete(
-      `/manager/delete/${id}`,
-      authHeaders()
-    );
+    const response = await api.delete(`/manager/delete/${id}`, authHeaders());
     return response.data;
   } catch (error) {
-    toast.error(
-      error.response?.data?.message || "Failed to delete task"
-    );
+    toast.error(error.response?.data?.message || "Failed to delete task");
     throw error.response?.data || error.message;
   }
 };
-

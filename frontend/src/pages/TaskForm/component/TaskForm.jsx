@@ -15,8 +15,8 @@ export default function CreateTaskForm() {
   }, [getAllUserMutation]);
 
   useEffect(() => {
-    if (isSuccess && data?.users) {
-      const emails = data.users.map((user) => user.email);
+    if (isSuccess && data?.data) {
+      const emails = data.data.map((user) => user.email);
       setUserEmails(emails);
     }
   }, [isSuccess, data]);
