@@ -5,7 +5,8 @@ import { getUsersIncludingCurrent,
      getUsersExcludingCurrentAndAdmin,
       getUsersExcludingAdmin, 
       getEmployees, 
-      getEmployeesAndManagers } from 
+      getEmployeesAndManagers, 
+      getEmployeesExcludeCurrent} from 
 "../controllers/getUser.controllers.js";
 const router = Router();
 
@@ -16,7 +17,13 @@ router.get("/exclude-admin", authMiddleware, getUsersExcludingAdmin);
 router.get("/exclude-current-and-admin", authMiddleware, getUsersExcludingCurrentAndAdmin);
 
 // employee-related routes
+
 router.get("/employees", authMiddleware, getEmployees);
+
+// only employee and manager can access this page 
+router.get("/employee-exclude-current", authMiddleware, getEmployeesExcludeCurrent);
+
+// only admin can acess this route
 router.get("/employees-and-managers", authMiddleware, getEmployeesAndManagers);
 
 export default router;

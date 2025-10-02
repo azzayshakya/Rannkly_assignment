@@ -1,6 +1,8 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+// import { Navigate } from "react-router-dom";
 
+// const navigate=Navigate()
 const API_BASE_URL = "http://localhost:3000";
 
 const api = axios.create({
@@ -21,6 +23,7 @@ api.interceptors.response.use(
     } else if (status === 403) {
       toast.error("You are not authorized to perform this action");
       // window.location.href = "/not-authorized";
+      // navigate("/not-authorized")
     }
     return Promise.reject(error);
   },
@@ -96,10 +99,13 @@ export const GetAllUsers = async () => {
 // create task api
 
 // in use : create task - assign task option
-export const getAllUsersExceptCurrentAndAdmin = async () => {
+
+// admin creat task
+// only admin should access this route
+export const getAllManagerAndEmployee = async () => {
   try {
     const response = await api.get(
-      "/get-users/exclude-current-and-admin",
+      "/get-users/employees-and-managers",
       authHeaders(),
     );
     return response.data;
@@ -108,7 +114,20 @@ export const getAllUsersExceptCurrentAndAdmin = async () => {
   }
 };
 
-// 2. create task api
+
+export const getAllEmployeeExceptCurrent= async () => {
+  try {
+    const response = await api.get(
+      "/get-users/employee-exclude-current",
+      authHeaders(),
+    );
+    return response.data;
+  } catch (error) {
+    throw error.response?.data || error.message;
+  }
+};
+
+// in use : create task api
 export const CreateTaskApi = async (data) => {
   try {
     const response = await api.post("/api/create-task", data, authHeaders());

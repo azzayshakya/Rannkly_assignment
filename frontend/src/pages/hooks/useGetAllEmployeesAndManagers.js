@@ -1,11 +1,10 @@
 import { getAllManagerAndEmployee } from "@/apis/apiServices";
 import { useMutation } from "@tanstack/react-query";
-
 import { toast } from "react-toastify";
 
-export const useGetAllUserMutation = () => {
+export const useGetAllManagerAndEmployeeMutation = () => {
   const {
-    mutate: getAllUserMutation,
+    mutate: getAllManagerAndEmployeeMutation,
     isPending: isGettingUsers,
     isSuccess,
     isError,
@@ -20,11 +19,11 @@ export const useGetAllUserMutation = () => {
   });
 
   return {
-    getAllUserMutation,
+    getAllManagerAndEmployeeMutation,
     isGettingUsers,
     isSuccess,
     isError,
     error,
-    data,
+    allManagersAndEmployeeData:data,
   };
 };

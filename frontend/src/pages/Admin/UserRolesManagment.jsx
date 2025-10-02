@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { useGetAllUserMutation } from "../hooks/useGetAllUser";
 import { useUpdateUserRoleMutation } from "../hooks/useUpdateUserRole";
+import { useGetAllUserMutation } from "../hooks/useGetAllUser";
 
 export default function UserRolesManagement() {
   const { getAllUserMutation, isGettingUsers, isSuccess, data } =

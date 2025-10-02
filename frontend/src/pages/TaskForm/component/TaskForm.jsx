@@ -1,25 +1,53 @@
 import { useEffect, useState } from "react";
-import { useGetAllUserMutation } from "@/pages/hooks/useGetAllUser";
 import { useCreateTaskMutation } from "../hooks/useSubmitTaskForm.js";
 import { useDefineTaskForm } from "../hooks/useDefineTaskForm.js";
+import { useGetAllEmployeeExceptCurrentMutation } from "@/pages/hooks/useGetAllEmployeeExceptCurrent.js";
+import { useContext } from "react";
+import { UserContext } from "@/context/user.context.jsx";
+import { useGetAllManagerAndEmployeeMutation } from "@/pages/hooks/useGetAllEmployeesAndManagers.js";
 
 export default function CreateTaskForm() {
+  const { user } = useContext(UserContext);
+  console.log(user.role);
+  const [usersToAssigned, setUsersToAssigned] = useState([]);
   const { form, errors } = useDefineTaskForm();
   const { submitTaskMutation, isSubmitting } = useCreateTaskMutation();
+  const {
+    getAllManagerAndEmployeeMutation,
+    isSuccess,
+    allManagersAndEmployeeData,
+  } = useGetAllManagerAndEmployeeMutation();
 
-  const { getAllUserMutation, isSuccess, data } = useGetAllUserMutation();
-  const [userEmails, setUserEmails] = useState([]);
+  const {
+    getAllEmployeeExceptCurrentMutation,
+    employeeExceptCurrentData,
+    isSuccessWhileGettingEmployeeExceptCurrent,
+  } = useGetAllEmployeeExceptCurrentMutation();
+
+  console.log("users are", allManagersAndEmployeeData?.data);
+  console.log("employeeExceptCurrentData", employeeExceptCurrentData);
 
   useEffect(() => {
-    getAllUserMutation();
-  }, [getAllUserMutation]);
+    getAllManagerAndEmployeeMutation();
+    getAllEmployeeExceptCurrentMutation();
+  }, [getAllManagerAndEmployeeMutation, getAllEmployeeExceptCurrentMutation]);
 
   useEffect(() => {
-    if (isSuccess && data?.data) {
-      const emails = data.data.map((user) => user.email);
-      setUserEmails(emails);
+    if (user?.role === "Admin" && isSuccess) {
+      setUsersToAssigned(allManagersAndEmployeeData?.data || []);
+    } else if (
+      (user?.role === "Employee" || user?.role === "Manager") &&
+      isSuccessWhileGettingEmployeeExceptCurrent
+    ) {
+      setUsersToAssigned(employeeExceptCurrentData?.data || []);
     }
-  }, [isSuccess, data]);
+  }, [
+    user?.role,
+    isSuccess,
+    allManagersAndEmployeeData,
+    isSuccessWhileGettingEmployeeExceptCurrent,
+    employeeExceptCurrentData,
+  ]);
 
   const onSubmit = (formData) => {
     submitTaskMutation(formData);
@@ -87,9 +115,9 @@ export default function CreateTaskForm() {
             className="w-full rounded border p-2"
           >
             <option value="">-- Select User --</option>
-            {userEmails.map((email) => (
-              <option key={email} value={email}>
-                {email}
+            {usersToAssigned.map((user) => (
+              <option key={user._id} value={user.email}>
+                {user.name} | {user.email} | {user.role}
               </option>
             ))}
           </select>

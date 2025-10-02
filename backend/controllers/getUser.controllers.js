@@ -74,7 +74,9 @@ export const getUsersExcludingCurrentAndAdmin = async (req, res) => {
 
 export const getUsersExcludingAdmin = async (req, res) => {
   try {
-    const users = await User.find({ role: { $ne: "Admin" } }).select("-password");
+    const users = await User.find({ role: { $ne: "Admin" } }).select(
+      "-password"
+    );
 
     res.status(200).json({
       success: true,
@@ -101,6 +103,47 @@ export const getEmployees = async (req, res) => {
     });
   } catch (error) {
     console.error("Error fetching employees:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch employees",
+    });
+  }
+};
+
+export const getEmployeesExcludeCurrent = async (req, res) => {
+  const currentUserId = req.user.id;
+
+  try {
+    const currentUser = await User.findById(currentUserId);
+    if (!currentUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+    if (currentUser.role === "Employee") {
+      const users = await User.find({
+        _id: { $ne: currentUserId },
+        role: { $in: ["Employee"] },
+      }).select("-password");
+
+      res.status(200).json({
+        success: true,
+        message: "Employees fetched successfully",
+        data: users,
+      });
+    } else {
+      const users = await User.find({
+        role: { $in: ["Employee"] },
+      }).select("-password");
+
+      res.status(200).json({
+        success: true,
+        message: "Employees fetched successfully",
+        data: users,
+      });
+    }
+  } catch (error) {
     res.status(500).json({
       success: false,
       message: "Failed to fetch employees",
