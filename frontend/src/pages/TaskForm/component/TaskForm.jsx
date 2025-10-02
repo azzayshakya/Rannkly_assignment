@@ -24,9 +24,6 @@ export default function CreateTaskForm() {
     isSuccessWhileGettingEmployeeExceptCurrent,
   } = useGetAllEmployeeExceptCurrentMutation();
 
-  console.log("users are", allManagersAndEmployeeData?.data);
-  console.log("employeeExceptCurrentData", employeeExceptCurrentData);
-
   useEffect(() => {
     getAllManagerAndEmployeeMutation();
     getAllEmployeeExceptCurrentMutation();

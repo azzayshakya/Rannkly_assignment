@@ -1,49 +1,63 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCreatedTasks } from "./hooks/useEmpCreatedTasks.js";
 import { useDeleteTask } from "./hooks/useEmpDeleteTask.js";
 import { useUpdateTask } from "./hooks/useEmpUpdateTask.js";
+import { useDefineEmpCreatedTask } from "./hooks/useDefineEmpCreatedTaskForm.js";
+import { useGetAllEmployeeExceptCurrentMutation } from "../hooks/useGetAllEmployeeExceptCurrent.js";
 
 const EmployeeCreatedTasksPage = () => {
   const { data: tasks, isLoading } = useCreatedTasks();
   const updateTask = useUpdateTask();
   const deleteTask = useDeleteTask();
 
+  const {
+    getAllEmployeeExceptCurrentMutation,
+    employeeExceptCurrentData,
+    isSuccessWhileGettingEmployeeExceptCurrent,
+  } = useGetAllEmployeeExceptCurrentMutation();
+
+  useEffect(() => {
+    getAllEmployeeExceptCurrentMutation();
+  }, [getAllEmployeeExceptCurrentMutation]);
+
+  const [employees, setEmployees] = useState([]);
+
+  useEffect(() => {
+    if (employeeExceptCurrentData?.data) {
+      setEmployees(employeeExceptCurrentData.data);
+    }
+  }, [employeeExceptCurrentData]);
+
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    status: "",
-    priority: "",
-  });
+
+  const { form, errors } = useDefineEmpCreatedTask();
+  const { register, handleSubmit, reset } = form;
 
   if (isLoading)
     return <p className="mt-10 text-center text-gray-500">Loading...</p>;
 
   const handleEditClick = (task) => {
+    console.log("task", task);
     setEditingTaskId(task._id);
-    setFormData({
+    reset({
       title: task.title,
       description: task.description,
       status: task.status,
       priority: task.priority,
+      assignedTo: task.assignedTo?._id || "",
+      dueDate: task.dueDate?.split("T")[0] || "",
     });
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
   };
 
   const handleCancel = () => {
     setEditingTaskId(null);
+    reset();
   };
 
-  const handleSave = (taskId) => {
-    updateTask.mutate({ id: taskId, updatedData: formData });
+  const onSubmit = (data) => {
+    updateTask.mutate({ id: editingTaskId, updatedData: data });
     setEditingTaskId(null);
+    reset();
   };
 
   const handleDelete = (id) => {
@@ -79,55 +93,45 @@ const EmployeeCreatedTasksPage = () => {
             className="mb-6 rounded-lg bg-white p-6 shadow-md transition-shadow hover:shadow-lg"
           >
             {editingTaskId === task._id ? (
-              <>
-                <div className="mb-4">
-                  <label
-                    className="mb-1 block font-semibold text-gray-700"
-                    htmlFor="title"
-                  >
+              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <div>
+                  <label className="block font-semibold text-gray-700">
                     Title
                   </label>
                   <input
-                    id="title"
-                    type="text"
-                    name="title"
-                    value={formData.title}
-                    onChange={handleInputChange}
-                    className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-                    autoFocus
+                    {...register("title")}
+                    className="w-full rounded-md border px-3 py-2"
                   />
+                  {errors.title && (
+                    <p className="text-sm text-red-500">
+                      {errors.title.message}
+                    </p>
+                  )}
                 </div>
 
-                <div className="mb-4">
-                  <label
-                    className="mb-1 block font-semibold text-gray-700"
-                    htmlFor="description"
-                  >
+                <div>
+                  <label className="block font-semibold text-gray-700">
                     Description
                   </label>
                   <textarea
-                    id="description"
-                    name="description"
-                    value={formData.description}
-                    onChange={handleInputChange}
+                    {...register("description")}
                     rows={3}
-                    className="w-full resize-none rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="w-full resize-none rounded-md border px-3 py-2"
                   />
+                  {errors.description && (
+                    <p className="text-sm text-red-500">
+                      {errors.description.message}
+                    </p>
+                  )}
                 </div>
 
-                <div className="mb-4">
-                  <label
-                    className="mb-1 block font-semibold text-gray-700"
-                    htmlFor="status"
-                  >
+                <div>
+                  <label className="block font-semibold text-gray-700">
                     Status
                   </label>
                   <select
-                    id="status"
-                    name="status"
-                    value={formData.status}
-                    onChange={handleInputChange}
-                    className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    {...register("status")}
+                    className="w-full rounded-md border px-3 py-2"
                   >
                     <option value="Pending">Pending</option>
                     <option value="InProgress">In Progress</option>
@@ -135,19 +139,13 @@ const EmployeeCreatedTasksPage = () => {
                   </select>
                 </div>
 
-                <div className="mb-6">
-                  <label
-                    className="mb-1 block font-semibold text-gray-700"
-                    htmlFor="priority"
-                  >
+                <div>
+                  <label className="block font-semibold text-gray-700">
                     Priority
                   </label>
                   <select
-                    id="priority"
-                    name="priority"
-                    value={formData.priority}
-                    onChange={handleInputChange}
-                    className="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    {...register("priority")}
+                    className="w-full rounded-md border px-3 py-2"
                   >
                     <option value="Low">Low</option>
                     <option value="Medium">Medium</option>
@@ -155,27 +153,65 @@ const EmployeeCreatedTasksPage = () => {
                   </select>
                 </div>
 
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    Assign To
+                  </label>
+                  <select
+                    {...register("assignedTo")}
+                    className="w-full rounded-md border px-3 py-2"
+                  >
+                    <option value="">Select Employee</option>
+                    {employees?.map((emp) => (
+                      <option key={emp._id} value={emp.email}>
+                        {emp.name} ({emp.email})
+                      </option>
+                    ))}
+                  </select>
+                  {errors.assignedTo && (
+                    <p className="text-sm text-red-500">
+                      {errors.assignedTo.message}
+                    </p>
+                  )}
+                </div>
+
+                <div>
+                  <label className="block font-semibold text-gray-700">
+                    Due Date
+                  </label>
+                  <input
+                    type="date"
+                    {...register("dueDate")}
+                    className="w-full rounded-md border px-3 py-2"
+                  />
+                  {errors.dueDate && (
+                    <p className="text-sm text-red-500">
+                      {errors.dueDate.message}
+                    </p>
+                  )}
+                </div>
+
                 <div className="flex gap-4">
                   <button
-                    onClick={() => handleSave(task._id)}
+                    type="submit"
                     disabled={updateTask.isLoading}
                     className={`flex-1 rounded-md px-4 py-2 font-semibold text-white ${
                       updateTask.isLoading
                         ? "cursor-not-allowed bg-green-300"
                         : "bg-green-600 hover:bg-green-700"
-                    } transition`}
+                    }`}
                   >
                     {updateTask.isLoading ? "Saving..." : "Save"}
                   </button>
                   <button
+                    type="button"
                     onClick={handleCancel}
-                    disabled={updateTask.isLoading}
-                    className="flex-1 rounded-md bg-gray-500 px-4 py-2 font-semibold text-white transition hover:bg-gray-600"
+                    className="flex-1 rounded-md bg-gray-500 px-4 py-2 font-semibold text-white hover:bg-gray-600"
                   >
                     Cancel
                   </button>
                 </div>
-              </>
+              </form>
             ) : (
               <div className="rounded-lg border border-gray-200 bg-white p-6">
                 <h3 className="mb-4 text-xl font-bold text-gray-900">
@@ -188,7 +224,9 @@ const EmployeeCreatedTasksPage = () => {
                     <dt className="font-semibold text-gray-600">
                       Assigned to:
                     </dt>
-                    <dd className="text-gray-800">{task.assignedTo}</dd>
+                    <dd className="text-gray-800">
+                      {task.assignedTo || "Unassigned"}
+                    </dd>
                   </div>
 
                   <div>
@@ -228,13 +266,13 @@ const EmployeeCreatedTasksPage = () => {
                 <div className="mt-6 flex gap-4">
                   <button
                     onClick={() => handleEditClick(task)}
-                    className="flex-1 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700"
+                    className="flex-1 rounded-md bg-blue-600 px-4 py-2 font-semibold text-white hover:bg-blue-700"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => handleDelete(task._id)}
-                    className="flex-1 rounded-md bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
+                    className="flex-1 rounded-md bg-red-600 px-4 py-2 font-semibold text-white hover:bg-red-700"
                   >
                     Delete
                   </button>
